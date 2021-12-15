@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react'
-import { useReducer } from 'react'
+import { useEffect, useState , useReducer } from 'react'
 
 const pinkRGB = `rgb(236, 72, 153)`
+const initialCount = 0;
+const itemsReducer = (count, action) => {
+  switch (action.type) {
+    case 'added': {
+      return count + 1
 
-export default function Counter() {
-  const [count, setCount] = useState(0)
-  const [currentColor, setCurrentColor] = useState(pinkRGB)
-  
-  function itemsReducer(items, action) {
-    switch (action.type) {
-      case 'added': {
-        return {}
-
-      }
-      case 'subtracted': {
-        return {}
-      }
-      case 'reset': {
-        return {}
-      }
+    }
+    case 'subtracted': {
+      return count - 1
+    }
+    case 'reset': {
+      return 0
+    }
+    default: {
+      throw Error('wrong type')
     }
   }
-  const [items, dispatch] = useReducer(itemsReducer, initialitems )
+}
+export default function Counter() {
+  const [currentColor, setCurrentColor] = useState(pinkRGB)
+  
+  
+  const [count, dispatch] = useReducer(itemsReducer, initialCount )
   useEffect(() => {
     if (count === 0) {
       setCurrentColor(pinkRGB)
@@ -37,15 +39,15 @@ export default function Counter() {
   }, [count])
 
   const increment = () => {
-   dispatch()
+   dispatch({ type: 'added'})
   }
 
   const decrement = () => {
-    setCount((prevState) => prevState - 1)
+   dispatch({ type: 'subtracted'})
   }
 
   const reset = () => {
-    setCount(0)
+    dispatch({ type: 'reset'})
   }
 
   return (
