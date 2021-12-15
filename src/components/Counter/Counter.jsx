@@ -1,11 +1,27 @@
 import { useEffect, useState } from 'react'
+import { useReducer } from 'react'
 
 const pinkRGB = `rgb(236, 72, 153)`
 
 export default function Counter() {
   const [count, setCount] = useState(0)
   const [currentColor, setCurrentColor] = useState(pinkRGB)
+  
+  function itemsReducer(items, action) {
+    switch (action.type) {
+      case 'added': {
+        return {}
 
+      }
+      case 'subtracted': {
+        return {}
+      }
+      case 'reset': {
+        return {}
+      }
+    }
+  }
+  const [items, dispatch] = useReducer(itemsReducer, initialitems )
   useEffect(() => {
     if (count === 0) {
       setCurrentColor(pinkRGB)
@@ -21,7 +37,7 @@ export default function Counter() {
   }, [count])
 
   const increment = () => {
-    setCount((prevState) => prevState + 1)
+   dispatch()
   }
 
   const decrement = () => {
